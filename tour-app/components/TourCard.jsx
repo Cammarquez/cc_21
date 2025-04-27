@@ -1,26 +1,54 @@
 import React, { useState } from 'react';
 
-const TourCard = ({ id, name, info, price, image, onRemove }) => { // This component is responsible for displaying individual tour details
+// TourCard component displays individual tour details
+const TourCard = ({ id, name, info, price, image, onRemove }) => {
+    // State to manage whether the full description is shown or truncated
     const [readMore, setReadMore] = useState(false);
 
-    return ( // This component renders the tour card with an image, name, price, and description
-        <div className="tour-card"> 
+    // Toggles the readMore state to show/hide full description
+    const toggleReadMore = () => {
+        setReadMore((prevState) => !prevState);
+    };
+
+    return (
+        <div className="tour-card">
+            {/* Tour image */}
             <img src={image} alt={name} className="tour-image" />
+
+            {/* Tour details */}
             <div className="tour-details">
-                <h2>{name}</h2>
+                {/* Tour name */}
+                <h2 className="tour-name">{name}</h2>
+
+                {/* Tour price */}
                 <h4 className="tour-price">${price}</h4>
-                <p>
+
+                {/* Tour description with toggle functionality */}
+                <p className="tour-info">
                     {readMore ? info : `${info.substring(0, 200)}...`}
-                    <button onClick={() => setReadMore(!readMore)}>
+                    <button className="btn-read-more" onClick={toggleReadMore}>
                         {readMore ? ' Show Less' : ' Read More'}
                     </button>
                 </p>
-                <button className="btn-not-interested" onClick={() => onRemove(id)}>
+
+                {/* Button to remove the tour */}
+                <button
+                    className="btn-not-interested"
+                    onClick={() => onRemove(id)}
+                >
                     Not Interested
                 </button>
             </div>
         </div>
-    ); // the return function renders the tour card with an image, name, price, and description and sets up a button to toggle the read more/less state
+    );
 };
 
-export default TourCard; // This component is exported for use in other parts of the application
+export default TourCard;
+
+/**
+ * Improvements made:
+ * 1. Added more descriptive class names for better styling and readability.
+ * 2. Extracted the toggle logic into a separate function for clarity.
+ * 3. Enhanced comments to explain each part of the component.
+ * 4. Ensured consistent formatting for better maintainability.
+ */
